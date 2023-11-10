@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 
-function NavBar() {
+function MainNavBar() {
   return (
     <nav>
       <NavLink to="/">
@@ -13,4 +13,4 @@ function NavBar() {
   )
 }
 
-export default NavBar
+export default MainNavBar

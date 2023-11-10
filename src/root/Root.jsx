@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import MainNavBar from '../components/MainNavBar/MainNavBar'
+import Header from '../components/Header/Header'
 // import './Root.css'
 
 function Root() {
@@ -9,7 +9,7 @@ function Root() {
   return (
     <>
       <h1>Root</h1>
-      <MainNavBar />
+      <Header />
       <Outlet />
     </>
   )
