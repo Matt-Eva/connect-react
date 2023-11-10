@@ -1,10 +1,11 @@
 import Root from "./root/Root.jsx";
-import Chats from "./pages/chats/Chats.jsx";
+import BrowseChats from "./pages/browse-chats/BrowseChats.jsx";
 import MyChats from "./pages/my-chats/MyChats.jsx";
 import NewChat from "./pages/new-chat/NewChat.jsx";
 import Search from "./pages/search/Search.jsx";
 import MyConnections from "./pages/my-connections/MyConnections.jsx";
 import NewConnections from "./pages/new-connections/NewConnections.jsx";
+import Chat from "./pages/chat/Chat.jsx";
 
 const routes = [
     {
@@ -13,7 +14,7 @@ const routes = [
         children: [
             {
                 path: '/',
-                element: <Chats />,
+                element: <BrowseChats />,
                 children: [
                     {
                         path: '/',
@@ -38,6 +39,9 @@ const routes = [
                     element: <MyConnections />
                   }
                 ]
+            }, {
+                path: '/chat/:chatId',
+                element: <Chat />
             }
         ]
     }

@@ -1,7 +1,7 @@
 import ChatNavBar from "../../components/ChatNavBar/ChatNavBar"
 import { Outlet } from "react-router-dom"
 
-function Chats() {
+function BrowseChats() {
   return (
     <main>
         Chats
@@ -11,4 +11,4 @@ function Chats() {
   )
 }
 
-export default Chats
+export default BrowseChats
