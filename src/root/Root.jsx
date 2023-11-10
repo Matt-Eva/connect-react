@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import NavBar from '../components/NavBar/NavBar'
+import { Outlet } from 'react-router-dom'
+import MainNavBar from '../components/MainNavBar/MainNavBar'
 // import './Root.css'
 
 function Root() {
@@ -8,7 +9,8 @@ function Root() {
   return (
     <>
       <h1>Root</h1>
-      <NavBar />
+      <MainNavBar />
+      <Outlet />
     </>
   )
 }
