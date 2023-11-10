@@ -3,7 +3,8 @@ import MainNavBar from "../MainNavBar/MainNavBar"
 function Header() {
   return (
     <header>
-        Header
+        <h1>Connect</h1>
+        <button>profile</button>
         <MainNavBar />
     </header>
   )
