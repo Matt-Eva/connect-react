@@ -22,10 +22,12 @@ function Root() {
     login()
   }, [])
 
+  const outletContext = {user: user}
+
   return (
     <>
       <Header />
-      <Outlet />
+      <Outlet context={outletContext}/>
     </>
   )
 }
