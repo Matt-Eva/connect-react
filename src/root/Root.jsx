@@ -4,16 +4,20 @@ import Header from '../components/Header/Header'
 // import './Root.css'
 
 function Root() {
-  const [count, setCount] = useState(0)
+  const [user, setUser] = useState(false)
 
   useEffect(() =>{
     const login = async () =>{
-    const res = await fetch("http://localhost:4000/login", {
-      credentials: "include"
-    })
-    const data = await res.json()
-    console.log(import.meta.env.VITE_BACKEND_URL)
-    console.log(data)
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name: "Matt"}),
+        credentials: "include"
+      })
+      const data = await res.json()
+      setUser(data)
     }
     login()
   }, [])
