@@ -1,11 +1,14 @@
-
+import { Link } from "react-router-dom"
 
 function ChatCard({chatId, users}) {
 
     console.log(chatId, users)
     const userNames = users.map(user => <span key={user.uId}>{user.name} </span>)
   return (
-    <article>{userNames}</article>
+    <article>
+        {userNames}
+        <Link to={`/chat/${chatId}`}>open</Link>
+    </article>
   )
 }
 
