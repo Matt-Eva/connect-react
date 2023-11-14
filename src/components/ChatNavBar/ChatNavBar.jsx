@@ -9,9 +9,9 @@ function ChatNavBar() {
         <NavLink to="/new-chat">
             new chat
         </NavLink>
-        {/* <NavLink to="/chat">
+        <NavLink to="/chat">
           chat
-        </NavLink> */}
+        </NavLink>
     </nav>
   )
 }
