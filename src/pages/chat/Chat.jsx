@@ -31,6 +31,10 @@ function Chat() {
     socket.on("connect", () =>{
       console.log("socket", socket.id)
     })
+
+    return () =>{
+      socket.disconnect()
+    }
   }, [])
 
   const displayMessages = messages.map(message =>{
@@ -38,7 +42,7 @@ function Chat() {
     const content = message[1]
     const userSpan = <span>{user.name}</span>
     const text = <p>{content.text}</p>
-    return <article>{userSpan} {text}</article>
+    return <article key={message[1].uId}>{userSpan} {text}</article>
   })
 
 
