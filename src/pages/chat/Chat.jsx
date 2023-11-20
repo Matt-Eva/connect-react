@@ -27,6 +27,10 @@ function Chat() {
       console.log(arg)
       setMessages(arg)
     })
+
+    socket.on("joined", (arg) =>{
+      console.log(arg)
+    })
   
     socket.on("connect", () =>{
       console.log("socket", socket.id)
@@ -35,6 +39,7 @@ function Chat() {
     return () =>{
       socket.disconnect()
     }
+
   }, [])
 
   const displayMessages = messages.map(message =>{
