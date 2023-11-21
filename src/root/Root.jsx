@@ -5,6 +5,7 @@ import Header from '../components/Header/Header'
 
 function Root() {
   const [user, setUser] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() =>{
@@ -16,9 +17,10 @@ function Root() {
       if(res.ok){
         const data = await res.json()
         setUser(data)
-        navigate('/')
+        setLoading(false)
       } else if (res.status === 401){
         setUser(false)
+        setLoading(false)
         navigate('/login')
       }
     }
@@ -55,6 +57,10 @@ function Root() {
   }
 
   const outletContext = {user: user, login: login}
+
+  if (loading){
+    return <h1>Loading...</h1>
+  }
 
   return (
     <>
