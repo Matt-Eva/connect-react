@@ -1,10 +1,13 @@
 import {useState, useEffect} from "react"
+import { useNavigate } from "react-router-dom"
 import CreateChatUserCard from "../../components/CreateChatUserCard/CreateChatUserCard.jsx"
 
 function NewChat() {
   const [connections, setConnections] = useState([])
   const [search, setSearch] = useState("")
   const [participants, setParticipants] = useState([])
+
+  const navigate = useNavigate()
 
   useEffect(() =>{
     const fetchConnections = async () =>{
@@ -41,8 +44,8 @@ function NewChat() {
     })
     
     if (res.ok){
-      const data = await res.json()
-      console.log(data)
+      const newChat = await res.json()
+      navigate(`/chat/${newChat.uId}`)
     }
   }
 
