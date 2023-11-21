@@ -17,6 +17,9 @@ function Root() {
         const data = await res.json()
         setUser(data)
         navigate('/')
+      } else if (res.status === 401){
+        setUser(false)
+        navigate('/login')
       }
     }
     getMe()

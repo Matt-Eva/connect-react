@@ -7,17 +7,21 @@ function MyChats() {
   const [chats, setChats] = useState({})
 
   useEffect(() =>{
+    console.log("effected")
     const fetchChats = async () =>{
-      const response = await fetch(import.meta.env.VITE_BACKEND_URL + "/my-chats", {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/my-chats", {
         credentials: "include"
       })
-      const chats = await response.json()
-      setChats(chats)
+      console.log(res.status)
+      if(res.ok){
+        const chats = await res.json()
+        setChats(chats)
+      }
     }
     if (user) {
       fetchChats()
     }
-  }, [user])
+  }, [])
 
   const displayChats = []
 
