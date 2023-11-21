@@ -52,6 +52,7 @@ function Root() {
       method: "DELETE",
       credentials: "include"
     })
+
     setUser(false)
     navigate("/login")
   }
