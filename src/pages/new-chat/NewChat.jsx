@@ -6,8 +6,6 @@ function NewChat() {
   const [search, setSearch] = useState("")
   const [participants, setParticipants] = useState([])
 
-  console.log(participants)
-
   useEffect(() =>{
     const fetchConnections = async () =>{
       const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/my-connections", {
@@ -29,7 +27,23 @@ function NewChat() {
   }
 
   const createChat = async () =>{
+    const body = {
+      participants: participants
+    }
+
+    const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-chat", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    })
     
+    if (res.ok){
+      const data = await res.json()
+      console.log(data)
+    }
   }
 
   const filteredConnections = connections.filter(connection => connection.name.toLowerCase().includes(search.toLowerCase()))
