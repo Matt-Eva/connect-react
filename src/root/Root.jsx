@@ -40,13 +40,22 @@ function Root() {
       const error = await res.json()
       console.error(error)
     }
-}
+  }
+
+  const logout = async () => {
+    await fetch(import.meta.env.VITE_BACKEND_URL + "/logout", {
+      method: "DELETE",
+      credentials: "include"
+    })
+    setUser(false)
+    navigate("/login")
+  }
 
   const outletContext = {user: user, login: login}
 
   return (
     <>
-       {user ? <Header /> : <Navigate to="/login" />}
+      {user ? <Header logout={logout} /> : <Navigate to="/login" />}
       <Outlet context={outletContext}/>
     </>
   )

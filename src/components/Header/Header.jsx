@@ -1,10 +1,11 @@
 import MainNavBar from "../MainNavBar/MainNavBar"
 
-function Header() {
+function Header({logout}) {
+
   return (
     <header>
         <h1>Connect</h1>
-        <button>profile</button>
+        <button onClick={logout}>logout</button>
         <MainNavBar />
     </header>
   )
