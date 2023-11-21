@@ -16,9 +16,10 @@ function Root() {
       if(res.ok){
         const data = await res.json()
         setUser(data)
+        navigate('/')
       }
     }
-    // getMe()
+    getMe()
   }, [])
 
   const login = async (username) =>{
