@@ -1,32 +1,51 @@
 import { useState, useEffect } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, Navigate, useNavigate } from 'react-router-dom'
 import Header from '../components/Header/Header'
 // import './Root.css'
 
 function Root() {
   const [user, setUser] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() =>{
-    const login = async () =>{
-      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({name: "Matt"}),
+    const getMe = async () =>{
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/me", {
         credentials: "include"
       })
-      const data = await res.json()
-      setUser(data)
+
+      if(res.ok){
+        const data = await res.json()
+        setUser(data)
+      }
     }
-    login()
+    // getMe()
   }, [])
 
-  const outletContext = {user: user}
+  const login = async (username) =>{
+    const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/login", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({username: username})
+    })
+
+    if (res.ok){
+      const data = await res.json()
+      setUser(data)
+      navigate('/')
+    } else {
+      const error = await res.json()
+      console.error(error)
+    }
+}
+
+  const outletContext = {user: user, login: login}
 
   return (
     <>
-      <Header />
+       {user ? <Header /> : <Navigate to="/login" />}
       <Outlet context={outletContext}/>
     </>
   )

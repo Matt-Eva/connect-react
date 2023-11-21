@@ -2,8 +2,8 @@ import { Link } from "react-router-dom"
 
 function ChatCard({chatId, users}) {
 
-    console.log(chatId, users)
-    const userNames = users.map(user => <span key={user.uId}>{user.name} </span>)
+  const userNames = users.map(user => <span key={user.uId}>{user.name} </span>)
+ 
   return (
     <article>
         {userNames}
