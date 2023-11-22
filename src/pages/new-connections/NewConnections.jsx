@@ -1,7 +1,9 @@
 import {useState} from "react"
+import NewConnectionCard from "../../components/NewConnectionCard/NewConnectionCard"
 
 function NewConnections() {
   const [search, setSearch] = useState('')
+  const [searchResults, setSearchResults] = useState([])
 
   const handleSearch = async (e) =>{
     e.preventDefault()
@@ -12,7 +14,7 @@ function NewConnections() {
       })
       if (res.ok){
         const data = await res.json()
-        console.log(data)
+        setSearchResults(data)
       } else{
         const error = await res.json()
         console.error(error)
@@ -22,6 +24,9 @@ function NewConnections() {
     }
   }
 
+  const displayResults = searchResults.map(result => <NewConnectionCard key={result.uId} {...result}/>)
+
+  console.log(displayResults)
   return (
     <div>NewConnections
 
@@ -29,7 +34,7 @@ function NewConnections() {
       <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
       <input type="submit" value="search" />
     </form>
-      
+      {displayResults}
     </div>
   )
 }
