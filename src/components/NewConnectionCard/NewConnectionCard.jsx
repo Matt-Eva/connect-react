@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 function NewConnectionCard({name, uId}) {
     const [connected, setConnected] = useState(false)
@@ -28,6 +29,7 @@ function NewConnectionCard({name, uId}) {
         <article>
             <p>{name} {uId} </p>
             {connected ? <span> connected</span>: <button onClick={addConnection}>connect</button>}
+            <Link to={`/profile/${uId}`}>View Profile</Link>
         </article>
       )
 }

@@ -1,8 +1,11 @@
-
+import { Link } from "react-router-dom"
 
 function ConnectionCard({name, uId}) {
   return (
-    <div>{name} {uId}</div>
+    <div>
+      {name} {uId}
+      <Link to={`/profile/${uId}`}>View Profile</Link>
+    </div>
   )
 }
 

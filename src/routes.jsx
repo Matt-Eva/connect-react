@@ -8,6 +8,7 @@ import NewConnections from "./pages/new-connections/NewConnections.jsx";
 import Chat from "./pages/chat/Chat.jsx";
 import Login from "./pages/login/Login.jsx"
 import CreateAccount from "./pages/createAccount/CreateAccount.jsx";
+import ProfilePage from "./pages/profilePage/ProfilePage.jsx";
 
 const routes = [
     {
@@ -53,6 +54,10 @@ const routes = [
             {
                 path: "/new-account",
                 element: <CreateAccount />
+            }, 
+            {
+                path: "/profile/:id",
+                element: <ProfilePage />
             }
         ]
     }
