@@ -27,14 +27,14 @@ function Root() {
     getMe()
   }, [])
 
-  const login = async (username) =>{
+  const login = async (email, password) =>{
     const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/login", {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({username: username})
+        body: JSON.stringify({email: email, password: password})
     })
 
     if (res.ok){
