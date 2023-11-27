@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useOutletContext, useNavigate } from "react-router-dom"
+import { useOutletContext, Link } from "react-router-dom"
 
 function Login() {
     const {login} = useOutletContext()
@@ -16,11 +16,12 @@ function Login() {
         Login
         <form onSubmit={handleLogin}>
             <label>email</label>
-            <input type='text' value={email} onChange={(e) => setEmail(e.target.value)}/>
+            <input type='text' autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)}/>
             <label>password</label>
-            <input type='password' value = {password} onChange={(e) => setPassword(e.target.value)} />
+            <input type='password' autoComplete="current-password" value = {password} onChange={(e) => setPassword(e.target.value)} />
             <input type='submit' value='login' />
         </form>
+        <Link to="/new-account">Create Account</Link>
     </main>
     )
 }

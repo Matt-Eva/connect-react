@@ -55,9 +55,33 @@ function Root() {
 
     setUser(false)
     navigate("/login")
+  } 
+
+  const createAccount = async (newUser) => {
+    try {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-account", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newUser)
+      })
+      if(res.ok){
+        const data = await res.json()
+        setUser(data)
+        navigate("/")
+      } else {
+        const error = await res.json()
+        throw new Error(error.error)
+      }
+    } catch(e) {
+      console.log(e)
+      throw new Error(e.message)
+    }
   }
 
-  const outletContext = {user: user, login: login}
+  const outletContext = {user: user, login: login, createAccount: createAccount}
 
   if (loading){
     return <h1>Loading...</h1>

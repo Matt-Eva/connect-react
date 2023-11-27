@@ -7,6 +7,7 @@ import MyConnections from "./pages/my-connections/MyConnections.jsx";
 import NewConnections from "./pages/new-connections/NewConnections.jsx";
 import Chat from "./pages/chat/Chat.jsx";
 import Login from "./pages/login/Login.jsx"
+import CreateAccount from "./pages/createAccount/CreateAccount.jsx";
 
 const routes = [
     {
@@ -40,12 +41,18 @@ const routes = [
                     element: <MyConnections />
                   }
                 ]
-            }, {
+            }, 
+            {
                 path: '/chat/:id',
                 element: <Chat />
-            }, {
+            }, 
+            {
                 path: "/login",
                 element: <Login />
+            }, 
+            {
+                path: "/new-account",
+                element: <CreateAccount />
             }
         ]
     }
