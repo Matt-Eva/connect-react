@@ -45,6 +45,7 @@ function NewChat() {
     
     if (res.ok){
       const newChat = await res.json()
+      console.log(newChat)
       navigate(`/chat/${newChat.uId}`)
     }
   }

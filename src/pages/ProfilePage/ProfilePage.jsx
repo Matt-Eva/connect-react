@@ -25,6 +25,7 @@ function ProfilePage() {
     }, [user])
 
     const startChat = async () =>{
+        console.log(profile)
         try {
             const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-chat", {
                 method: "POST",
@@ -34,6 +35,7 @@ function ProfilePage() {
                 },
                 body: JSON.stringify({participants: [profile]})
             })
+
             if (res.ok){
                 const chat = await res.json()
                 navigate(`/chat/${chat.uId}`)
@@ -44,8 +46,23 @@ function ProfilePage() {
         }
     }
 
-    const connect = () => {
-
+    const connect = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-connection", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(profile)
+            })
+            
+            if(res.ok){
+                setProfile({...profile, connected: true})
+            }
+        } catch (e){
+            console.error(e)
+        }
     }
 
     if(!profile){
