@@ -7,6 +7,8 @@ function ProfilePage() {
     const navigate = useNavigate()
     const {id} = useParams()
 
+    console.log(profile)
+
     useEffect(() =>{
         const loadProfile = async () =>{
             try {
@@ -48,18 +50,20 @@ function ProfilePage() {
 
     const connect = async () => {
         try {
-            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-connection", {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL +"/invite-connection", {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(profile)
+                body: JSON.stringify({connectionId: profile.uId})
             })
-            
             if(res.ok){
-                setProfile({...profile, connected: true})
+                setProfile({
+                    ...profile, pending: true
+                })
             }
+            
         } catch (e){
             console.error(e)
         }
@@ -72,7 +76,10 @@ function ProfilePage() {
     return (
         <div>
             <h2>{profile.name}</h2>
-            {profile.connected ? <button onClick={startChat}>Message</button> : <button onClick={connect}>Connect</button>}
+            {profile.connected ? <button onClick={startChat}>Message</button> : null}
+            {profile.pending ? <p>Invitation Pending</p> : null}
+            {profile.invited ? <button>Accept</button> : null}
+            {(!profile.connected && !profile.pending) && !profile.invited ? <button onClick={connect}>Connect</button> : null}
         </div>
     )
 }
