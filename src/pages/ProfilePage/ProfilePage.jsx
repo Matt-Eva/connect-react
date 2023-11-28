@@ -69,6 +69,24 @@ function ProfilePage() {
         }
     }
 
+    const accept = async () =>{
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/accept-invitation", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({connectionId: profile.uId})
+            })
+            if (res.ok){
+                setProfile({...profile, connected: true})
+            }
+        } catch (e){
+            console.error(e)
+        }
+    }
+
     if(!profile){
         return <h2>Loading...</h2>
     }
@@ -78,7 +96,7 @@ function ProfilePage() {
             <h2>{profile.name}</h2>
             {profile.connected ? <button onClick={startChat}>Message</button> : null}
             {profile.pending ? <p>Invitation Pending</p> : null}
-            {profile.invited ? <button>Accept</button> : null}
+            {profile.invited ? <button onClick={accept}>Accept</button> : null}
             {(!profile.connected && !profile.pending) && !profile.invited ? <button onClick={connect}>Connect</button> : null}
         </div>
     )

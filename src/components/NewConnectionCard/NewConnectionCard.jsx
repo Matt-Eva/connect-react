@@ -6,13 +6,13 @@ function NewConnectionCard({name, uId}) {
 
     const addConnection = async () =>{
         try {
-            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/new-connection", {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/invite-connection", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 credentials: "include",
-                body: JSON.stringify({name: name, uId: uId})
+                body: JSON.stringify({connectionId: uId})
             })
             if(res.ok){
                 setConnected(true)
@@ -28,7 +28,7 @@ function NewConnectionCard({name, uId}) {
     return (
         <article>
             <p>{name} {uId} </p>
-            {connected ? <span> connected</span>: <button onClick={addConnection}>connect</button>}
+            {connected ? <span> Invitation Pending</span>: <button onClick={addConnection}>connect</button>}
             <Link to={`/profile/${uId}`}>View Profile</Link>
         </article>
       )
