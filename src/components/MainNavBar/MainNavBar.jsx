@@ -6,8 +6,8 @@ function MainNavBar() {
       <NavLink to="/">
         chats
       </NavLink>
-      <NavLink to="/search">
-        search
+      <NavLink to="/people">
+        people
       </NavLink>
     </nav>
   )

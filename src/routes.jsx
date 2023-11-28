@@ -9,6 +9,7 @@ import Chat from "./pages/chat/Chat.jsx";
 import Login from "./pages/login/Login.jsx"
 import CreateAccount from "./pages/createAccount/CreateAccount.jsx";
 import ProfilePage from "./pages/profilePage/ProfilePage.jsx";
+import MyInvitations from "./pages/myInvitations/myInvitations.jsx";
 
 const routes = [
     {
@@ -30,16 +31,20 @@ const routes = [
                 ]
             },
             {
-                path: '/search',
+                path: '/people',
                 element: <Search />,
                 children: [
                   {
-                    path: "/search",
+                    path: "/people",
                     element: <NewConnections />
                   },
                   {
-                    path: "/search/my-connections",
+                    path: "/people/my-connections",
                     element: <MyConnections />
+                  },
+                  {
+                    path: "/people/invitations",
+                    element: <MyInvitations />
                   }
                 ]
             }, 
