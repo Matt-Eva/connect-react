@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 
 function NewConnectionCard({name, uId, pending, invited}) {
-    const [invitation, setInvitation] = useState(invited)
     const [pendingInvite, setPendingInvite] = useState(pending)
     const [connected, setConnected] = useState(false)
 
@@ -49,7 +48,7 @@ function NewConnectionCard({name, uId, pending, invited}) {
         <article>
             <p>{name} {uId} </p>
             { pendingInvite ? <span> Invitation Pending</span> : 
-                (invitation ? 
+                (invited ? 
                     (connected ? 
                         <span> Connected</span>
                         : 
