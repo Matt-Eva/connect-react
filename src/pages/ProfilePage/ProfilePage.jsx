@@ -20,6 +20,9 @@ function ProfilePage() {
                 if (res.ok){
                     const data = await res.json()
                     setProfile(data)
+                } else if(res.status === 404){
+                    alert("Profile not found - redirecting to home page")
+                    navigate("/")
                 }
             } catch (e){
                 console.error(e)
