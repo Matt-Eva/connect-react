@@ -117,7 +117,20 @@ function ProfilePage() {
     }
 
     const unblock = async () => {
-
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + `/unblock-user/${profile.uId}`, {
+                method: "DELETE",
+                credentials: "include"
+            })
+            if (res.ok){
+                setProfile({
+                    ...profile,
+                    blocked: false
+                })
+            }
+        } catch (e) {
+            console.error(e)
+        }
     }
  
     const disconnect = async () =>{
