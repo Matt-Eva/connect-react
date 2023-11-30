@@ -5,7 +5,7 @@ function ProfilePage() {
     const {user} = useOutletContext()
     const [profile, setProfile] = useState(false)
     const [blocked, setBlocked] = useState(false)
-    const [ignored, setIgnored] = useState(false)
+    const [responded, setResponded] = useState(false)
     const [allowDisconnect, setAllowDisconnect] = useState(false)
     const navigate = useNavigate()
     const {id} = useParams()
@@ -87,27 +87,9 @@ function ProfilePage() {
             })
             if (res.ok){
                 setProfile({...profile, connected: true})
+                setResponded(true)
             }
         } catch (e){
-            console.error(e)
-        }
-    }
-
-    const ignore = async () =>{
-        try {
-            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/ignore-invitation", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({connectionId: profile.uId})
-            })
-            if (res.ok){
-                setResponded(true)
-                setIgnored(true)
-            }
-        } catch (e) {
             console.error(e)
         }
     }
@@ -157,15 +139,13 @@ function ProfilePage() {
                 (responded ? 
                     <>
                     {blocked ? <span>Blocked</span> : null}
-                    {ignored ? <span>Request Ignored</span> : null}
                     </> :
                 <> 
-                    <button onClick={accept}>Accept</button> 
-                    <button onClick={ignore}>Ignore</button>
+                    <button onClick={accept}>Accept Invitation</button> 
                     <button onClick={block}>Block</button>
                 </>)
             : null}
-            {(!profile.connected && !profile.pending) && (!profile.invited || profile.ignored) ? <button onClick={connect}>Connect</button> : null}
+            {(!profile.connected && !profile.pending) && !profile.invited  ? <button onClick={connect}>Connect</button> : null}
         </div>
     )
 }

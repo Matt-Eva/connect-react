@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-function NewConnectionCard({name, uId, pending}) {
-    const [invited, setInvited] = useState(pending)
+function NewConnectionCard({name, uId, pending, invited}) {
+    const [invitation, setInvitation] = useState(invited)
+    const [pendingInvite, setPendingInvite] = useState(pending)
+    const [connected, setConnected] = useState(false)
 
     const addConnection = async () =>{
         try {
@@ -15,7 +17,7 @@ function NewConnectionCard({name, uId, pending}) {
                 body: JSON.stringify({connectionId: uId})
             })
             if(res.ok){
-                setInvited(true)
+                setPendingInvite(true)
             } else{
                 const error = await res.json()
                 console.log(error)
@@ -25,10 +27,38 @@ function NewConnectionCard({name, uId, pending}) {
         }
     }
 
+    const acceptInvitation = async () => {
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/accept-invitation", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({connectionId: uId})
+            })
+            if (res.ok){
+                setConnected(true)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     return (
         <article>
             <p>{name} {uId} </p>
-            {invited ? <span> Invitation Pending</span>: <button onClick={addConnection}>connect</button>}
+            { pendingInvite ? <span> Invitation Pending</span> : 
+                (invitation ? 
+                    (connected ? 
+                        <span> Connected</span>
+                        : 
+                        <button onClick={acceptInvitation}> Accept Invitation</button>
+                    )
+                    :
+                    <button onClick={addConnection}>connect</button>
+                )
+            }
             <Link to={`/profile/${uId}`}>View Profile</Link>
         </article>
       )
