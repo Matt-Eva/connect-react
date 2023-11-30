@@ -43,7 +43,7 @@ function Root() {
     if (res.ok){
       const data = await res.json()
       setUser(data)
-      if (startingPath === "/login"){
+      if (startingPath === "/login" || startingPath === "/new-account"){
         navigate("/")
       } else {
         navigate(startingPath)
@@ -77,7 +77,11 @@ function Root() {
       if(res.ok){
         const data = await res.json()
         setUser(data)
-        navigate("/")
+        if (startingPath === "/login" || startingPath === "/new-account"){
+          navigate("/")
+        } else {
+          navigate(startingPath)
+        }
       } else {
         const error = await res.json()
         throw new Error(error.error)
