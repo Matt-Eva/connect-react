@@ -4,7 +4,7 @@ function SearchNavBar() {
   return (
     <nav>
         <NavLink to="/people">
-            new connections
+            search
         </NavLink>
         <NavLink to="/people/my-connections">
             my connections
