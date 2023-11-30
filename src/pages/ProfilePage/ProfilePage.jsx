@@ -93,7 +93,27 @@ function ProfilePage() {
     }
 
     const block = async () =>{
-        
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/block-user", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({userId: profile.uId})
+            })
+            if (res.ok){
+                setProfile({
+                    ...profile,
+                    blocked: true,
+                    connected: false,
+                    pending: false,
+                    invited: false
+                })
+            }
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     const unblock = async () => {
@@ -139,7 +159,7 @@ function ProfilePage() {
                 : null}
             {profile.pending ? <p>Invitation Pending</p> : null}
             {profile.invited ? <button onClick={accept}>Accept Invitation</button> : null}
-            {(!profile.connected && !profile.pending) && !profile.invited  ? <button onClick={connect}>Connect</button> : null}
+            {(!profile.connected && !profile.pending) && (!profile.invited && !profile.blocked) ? <button onClick={connect}>Connect</button> : null}
         </div>
     )
 }
