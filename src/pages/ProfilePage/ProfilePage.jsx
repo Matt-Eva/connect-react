@@ -6,6 +6,7 @@ function ProfilePage() {
     const [profile, setProfile] = useState(false)
     const [blocked, setBlocked] = useState(false)
     const [ignored, setIgnored] = useState(false)
+    const [allowDisconnect, setAllowDisconnect] = useState(false)
     const navigate = useNavigate()
     const {id} = useParams()
 
@@ -115,6 +116,22 @@ function ProfilePage() {
 
     }
 
+    const disconnect = async () =>{
+        try {
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + `/delete-connection/${profile.uId}`, {
+                method: "DELETE",
+                credentials: "include"
+            })
+            if (res.ok){
+                alert(`disconnected from ${profile.name}`)
+                setProfile({...profile, connected: false})
+                setAllowDisconnect(false)
+            }
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     if(!profile){
         return <h2>Loading...</h2>
     }
@@ -122,7 +139,19 @@ function ProfilePage() {
     return (
         <div>
             <h2>{profile.name}</h2>
-            {profile.connected ? <button onClick={startChat}>Message</button> : null}
+            {profile.connected ? 
+            <>
+                <button onClick={startChat}>Message</button>
+                <button onClick={() => setAllowDisconnect(true)}>Disconnect</button>
+            </>
+             : null}
+            {allowDisconnect ? 
+            <>
+                <p>Are you sure you want to disconnect from {profile.name}?</p>
+                <button onClick={disconnect}>Yes</button>
+                <button onClick={() => setAllowDisconnect(false)}>No</button>
+            </>
+                : null}
             {profile.pending ? <p>Invitation Pending</p> : null}
             {profile.invited ?
                 (responded ? 
