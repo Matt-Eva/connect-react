@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 
-function NewConnectionCard({name, uId}) {
-    const [connected, setConnected] = useState(false)
+function NewConnectionCard({name, uId, pending}) {
+    const [invited, setInvited] = useState(pending)
 
     const addConnection = async () =>{
         try {
@@ -15,7 +15,7 @@ function NewConnectionCard({name, uId}) {
                 body: JSON.stringify({connectionId: uId})
             })
             if(res.ok){
-                setConnected(true)
+                setInvited(true)
             } else{
                 const error = await res.json()
                 console.log(error)
@@ -28,7 +28,7 @@ function NewConnectionCard({name, uId}) {
     return (
         <article>
             <p>{name} {uId} </p>
-            {connected ? <span> Invitation Pending</span>: <button onClick={addConnection}>connect</button>}
+            {invited ? <span> Invitation Pending</span>: <button onClick={addConnection}>connect</button>}
             <Link to={`/profile/${uId}`}>View Profile</Link>
         </article>
       )
