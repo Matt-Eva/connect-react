@@ -4,8 +4,6 @@ import { useParams, useOutletContext, useNavigate } from "react-router"
 function ProfilePage() {
     const {user} = useOutletContext()
     const [profile, setProfile] = useState(false)
-    const [blocked, setBlocked] = useState(false)
-    const [responded, setResponded] = useState(false)
     const [allowDisconnect, setAllowDisconnect] = useState(false)
     const navigate = useNavigate()
     const {id} = useParams()
@@ -95,9 +93,13 @@ function ProfilePage() {
     }
 
     const block = async () =>{
-
+        
     }
 
+    const unblock = async () => {
+
+    }
+ 
     const disconnect = async () =>{
         try {
             const res = await fetch(import.meta.env.VITE_BACKEND_URL + `/delete-connection/${profile.uId}`, {
@@ -127,6 +129,7 @@ function ProfilePage() {
                 <button onClick={() => setAllowDisconnect(true)}>Disconnect</button>
             </>
              : null}
+            {profile.blocked? <button onClick={unblock}>Unblock</button> : <button onClick={block}>Block</button>}
             {allowDisconnect ? 
             <>
                 <p>Are you sure you want to disconnect from {profile.name}?</p>
@@ -135,16 +138,7 @@ function ProfilePage() {
             </>
                 : null}
             {profile.pending ? <p>Invitation Pending</p> : null}
-            {profile.invited ?
-                (responded ? 
-                    <>
-                    {blocked ? <span>Blocked</span> : null}
-                    </> :
-                <> 
-                    <button onClick={accept}>Accept Invitation</button> 
-                    <button onClick={block}>Block</button>
-                </>)
-            : null}
+            {profile.invited ? <button onClick={accept}>Accept Invitation</button> : null}
             {(!profile.connected && !profile.pending) && !profile.invited  ? <button onClick={connect}>Connect</button> : null}
         </div>
     )

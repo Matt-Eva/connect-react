@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Outlet, Navigate, useNavigate } from 'react-router-dom'
+import { Outlet, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import Header from '../components/Header/Header'
 // import './Root.css'
 
@@ -7,6 +7,9 @@ function Root() {
   const [user, setUser] = useState(false)
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
+  const location = useLocation()
+  const [startingPath, setStartingPath] = useState(location.pathname)
+  console.log(startingPath)
 
   useEffect(() =>{
     const getMe = async () =>{
@@ -40,7 +43,11 @@ function Root() {
     if (res.ok){
       const data = await res.json()
       setUser(data)
-      navigate('/')
+      if (startingPath === "/login"){
+        navigate("/")
+      } else {
+        navigate(startingPath)
+      }
     } else {
       const error = await res.json()
       console.error(error)
