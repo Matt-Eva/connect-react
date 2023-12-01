@@ -4,6 +4,7 @@ import ProfileIcon from "../ProfileIcon/ProfileIcon"
 function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     const [enableDelete, setEnableDelete] = useState(false)
     const [disableChangeInfo, setDisableChangeInfo] = useState(true)
+    const [disableChangePassword, setDisableChangePassword] = useState(true)
     const [initialChangeFormState, setInitialChangeFormState] = useState({
         firstName: firstName,
         lastName: lastName,
@@ -59,17 +60,22 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
         {disableChangeInfo ? null : <button onClick={() =>{
             setFormState(initialChangeFormState)
             setDisableChangeInfo(true)
-        }}>Cancel Changes</button>}
+        }}>Cancel</button>}
         <h2>Change password</h2>
+        <button onClick={() => setDisableChangePassword(false)}>Change Password</button>
         <form onSubmit={updatePassword} onChange={handlePasswordChange}>
             <label for="currentPassword">Current Password</label>
-            <input type="password" name="currentPassword" />
+            <input type="password" name="currentPassword" disabled={disableChangePassword}/>
             <label for="newPassword">New Password</label>
-            <input type="password" name="newPassword" />
+            <input type="password" name="newPassword" disabled={disableChangePassword}/>
             <label for="confirmPassword">Confirm Password</label>
-            <input type="password" name="confirmPassword" />
-            <input type="submit" />
+            <input type="password" name="confirmPassword" disabled={disableChangePassword}/>
+            <input type="submit" disabled={disableChangePassword}/>
         </form>
+        {disableChangePassword ? null : <button onClick={() =>{
+            setPasswordState(initialPasswordState)
+            setDisableChangePassword(true)
+        }}>Cancel</button>}
         <h2>Delete Account</h2>
         <button onClick={() => setEnableDelete(true)}>Delete Account</button>
         {enableDelete ?
