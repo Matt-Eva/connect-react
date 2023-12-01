@@ -15,7 +15,7 @@ function Account() {
 
     return (
         <div>
-            {editMode ? <AccountInfo toggleEdit={toggleEdit} {...user} /> : <EditAccountForm toggleEdit={toggleEdit} {...user}/>}
+            {editMode ? <EditAccountForm toggleEdit={toggleEdit} {...user}/> : <AccountInfo toggleEdit={toggleEdit} {...user} />}
         </div>
     )
 }
