@@ -91,7 +91,9 @@ function Root() {
     }
   }
 
-  const outletContext = {user: user, login: login, createAccount: createAccount}
+  const destroyUser = () => setUser(false)
+
+  const outletContext = {user, login: login, destroyUser, createAccount: createAccount}
 
   if (loading){
     return <h1>Loading...</h1>

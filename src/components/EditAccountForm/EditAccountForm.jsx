@@ -1,7 +1,9 @@
 import { useState } from "react"
+import { useNavigate, useOutletContext } from "react-router-dom"
 import ProfileIcon from "../ProfileIcon/ProfileIcon"
 
 function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
+    const {destroyUser} = useOutletContext()
     const [enableDelete, setEnableDelete] = useState(false)
     const [disableChangeInfo, setDisableChangeInfo] = useState(true)
     const [disableChangePassword, setDisableChangePassword] = useState(true)
@@ -17,6 +19,8 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
         confirmPassword: ''
     }
     const [passwordState, setPasswordState] = useState (initialPasswordState)
+
+    const navigate = useNavigate()
 
     const handleInfoChange = (e) =>{
         setFormState({
@@ -87,7 +91,19 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     }
  
     const deleteAccount = async () => {
-
+        try{
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/my-account", {
+                method: "DELETE",
+                credentials: "include"
+            })
+            if (res.ok){
+                alert("account successfully deleted")
+                destroyUser()
+                navigate("/login")
+            }
+        } catch(e){
+            console.error(e)
+        }
     }
 
   return (
@@ -128,7 +144,7 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
         {enableDelete ?
         <>
             <p>Are you sure you want to delete your account?</p>
-            <button>Yes, Delete my Account</button>
+            <button onClick={deleteAccount}>Yes, Delete my Account</button>
             <br />
             <br />
             <button onClick={() => setEnableDelete(false)}>No, Don't Delete my Account</button>
