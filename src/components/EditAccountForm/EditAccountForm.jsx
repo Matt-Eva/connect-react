@@ -3,11 +3,13 @@ import ProfileIcon from "../ProfileIcon/ProfileIcon"
 
 function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     const [enableDelete, setEnableDelete] = useState(false)
-    const [formState, setFormState] = useState({
+    const [disableChangeInfo, setDisableChangeInfo] = useState(true)
+    const [initialChangeFormState, setInitialChangeFormState] = useState({
         firstName: firstName,
         lastName: lastName,
         email: email
     })
+    const [formState, setFormState] = useState(initialChangeFormState)
     const initialPasswordState = {
         currentPassword: '',
         newPassword: '',
@@ -18,9 +20,19 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     const updateAccount = async (e) =>{
         e.preventDefault()
     }
+    
+    const handleInfoChange = async (e) =>{
+        setFormState({
+            ...formState,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const updatePassword = async (e) =>{
         e.preventDefault()
+    }
+
+    const handlePasswordChange = async (e) =>{
         setPasswordState({
             ...passwordState,
             [e.target.name]: e.target.value
@@ -34,17 +46,22 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     <div>
         <button onClick={toggleEdit}>Back</button>
         <h2>Update Profile Info</h2>
-        <form onSubmit={updateAccount}>
+        <button onClick={() => setDisableChangeInfo(false)}>Change Info</button>
+        <form onSubmit={updateAccount} onChange={handleInfoChange} disabled={true}>
             <label for="firstName">First Name</label>
-            <input type="text" name="firstName" value={formState.firstName} />
+            <input type="text" name="firstName" value={formState.firstName} disabled={disableChangeInfo}/>
             <label for="lastName">Last Name</label>
-            <input type="text" name="lastName" value={formState.lastName} />
+            <input type="text" name="lastName" value={formState.lastName} disabled={disableChangeInfo} />
             <label for="email">Email</label>
-            <input type="text" name="email" value={formState.email} />
-            <input type="submit" />
+            <input type="text" name="email" value={formState.email} disabled={disableChangeInfo}/>
+            <input type="submit" disabled={disableChangeInfo}/>
         </form>
+        {disableChangeInfo ? null : <button onClick={() =>{
+            setFormState(initialChangeFormState)
+            setDisableChangeInfo(true)
+        }}>Cancel Changes</button>}
         <h2>Change password</h2>
-        <form onSubmit={updatePassword}>
+        <form onSubmit={updatePassword} onChange={handlePasswordChange}>
             <label for="currentPassword">Current Password</label>
             <input type="password" name="currentPassword" />
             <label for="newPassword">New Password</label>
