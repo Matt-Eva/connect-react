@@ -57,6 +57,33 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
     
     const updatePassword = async (e) =>{
         e.preventDefault()
+        if (passwordState.newPassword !== passwordState.confirmPassword) {
+            alert("Password confirmation must match new password.")
+            setPasswordState({
+                ...passwordState,
+                newPassword: '',
+                confirmPassword: ''
+            })
+            return
+        }
+
+        try{
+            const res = await fetch(import.meta.env.VITE_BACKEND_URL + "/update-password", {
+                method: "PATCH",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({passwordInfo: passwordState})
+            })
+            if (res.ok){
+                alert("Password updated successfully!")
+                setPasswordState(initialPasswordState)
+            }
+        } catch(e){
+            console.error(e)
+        }
+
     }
  
     const deleteAccount = async () => {
@@ -85,11 +112,11 @@ function EditAccountForm({toggleEdit, firstName, lastName, email, profileImg}) {
         <button onClick={() => setDisableChangePassword(false)}>Change Password</button>
         <form onSubmit={updatePassword} onChange={handlePasswordChange}>
             <label htmlFor="currentPassword">Current Password</label>
-            <input type="password" name="currentPassword" disabled={disableChangePassword}/>
+            <input type="password" name="currentPassword" value={passwordState.currentPassword} disabled={disableChangePassword}/>
             <label htmlFor="newPassword">New Password</label>
-            <input type="password" name="newPassword" disabled={disableChangePassword}/>
+            <input type="password" name="newPassword" value={passwordState.newPassword} disabled={disableChangePassword}/>
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input type="password" name="confirmPassword" disabled={disableChangePassword}/>
+            <input type="password" name="confirmPassword" value={passwordState.confirmPassword} disabled={disableChangePassword}/>
             <input type="submit" disabled={disableChangePassword}/>
         </form>
         {disableChangePassword ? null : <button onClick={() =>{

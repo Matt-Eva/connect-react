@@ -9,7 +9,6 @@ function Root() {
   const navigate = useNavigate()
   const location = useLocation()
   const [startingPath, setStartingPath] = useState(location.pathname)
-  console.log(startingPath)
 
   useEffect(() =>{
     const getMe = async () =>{
