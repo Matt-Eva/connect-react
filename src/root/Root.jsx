@@ -59,7 +59,7 @@ function Root() {
       method: "DELETE",
       credentials: "include"
     })
-
+    setStartingPath(location.pathname)
     setUser(false)
     navigate("/login")
   } 

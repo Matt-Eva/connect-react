@@ -10,6 +10,7 @@ import Login from "./pages/login/Login.jsx"
 import CreateAccount from "./pages/createAccount/CreateAccount.jsx";
 import ProfilePage from "./pages/profilePage/ProfilePage.jsx";
 import MyInvitations from "./pages/myInvitations/myInvitations.jsx";
+import Account from "./pages/Account/Account.jsx";
 
 const routes = [
     {
@@ -63,6 +64,10 @@ const routes = [
             {
                 path: "/profile/:id",
                 element: <ProfilePage />
+            },
+            {
+                path: "/account",
+                element: <Account />
             }
         ]
     }
