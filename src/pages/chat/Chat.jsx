@@ -1,5 +1,5 @@
 import { io } from "socket.io-client"
-import { useParams, useOutletContext } from "react-router-dom"
+import { useParams, useOutletContext, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 
@@ -11,6 +11,8 @@ function Chat() {
   const [socket, setSocket] = useState({})
 
   const chatId = useParams().id
+
+  const navigate = useNavigate()
 
   useEffect(() =>{
     const socket = io(import.meta.env.VITE_BACKEND_URL, {
@@ -68,6 +70,21 @@ function Chat() {
     setInput('')
   }
 
+  const leaveChat = async () => {
+    try {
+      const res = await fetch(import.meta.env.VITE_BACKEND_URL + `/leave-chat/${chatId}`, {
+        method: "DELETE",
+        credentials: "include"
+      })
+      if (res.ok){
+        alert("You have left the chat")
+        navigate('/')
+      }
+    } catch(e) {
+      console.error(e)
+    }
+  }
+
   const displayMessages = messages.map(message =>{
     const user = message[0]
     const content = message[1]
@@ -77,7 +94,9 @@ function Chat() {
   })
 
   return (
-    <main>Chat
+    <main>
+      <h2>Chat</h2>
+      <button onClick={leaveChat}>Leave Chat</button>
       <section style={{height: "70vh", overflow: "scroll"}}>
         {displayMessages}
       </section>

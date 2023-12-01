@@ -5,7 +5,7 @@ import NewChat from "./pages/new-chat/NewChat.jsx";
 import Search from "./pages/search/Search.jsx";
 import MyConnections from "./pages/my-connections/MyConnections.jsx";
 import NewConnections from "./pages/new-connections/NewConnections.jsx";
-import Chat from "./pages/chat/Chat.jsx";
+import Chat from "./pages/Chat/Chat.jsx";
 import Login from "./pages/login/Login.jsx"
 import CreateAccount from "./pages/createAccount/CreateAccount.jsx";
 import ProfilePage from "./pages/profilePage/ProfilePage.jsx";
